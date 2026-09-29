@@ -9,6 +9,7 @@ lang: ja
 
 An AI assistant that runs entirely on your phone (Android, coming soon).
 
+- [テスター募集 / Join the beta](testers/)
 - [プライバシーポリシー / Privacy Policy](privacy/)
 
 お問い合わせ / Contact: kaihatsu.dev@gmail.com
