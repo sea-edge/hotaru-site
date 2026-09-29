@@ -49,7 +49,7 @@ AI モデルの検索とダウンロードのために、Hugging Face に接続�
 
 AI の回答や生成した画像を報告すると、報告の理由、コメント、対象の内容（回答の文章）、使ったモデル名、本アプリのバージョンが開発者に送られます。報告は、ユーザーが送信を選んだときにだけ送られます。
 
-報告は、不適切な出力を減らすためのフィルターの改善にだけ使い、受け取ってから 1 年後に削除します。
+報告は、開発者が管理する Google スプレッドシートに（Google Apps Script を通して）保存し、不適切な出力を減らすためのフィルターの改善にだけ使います。受け取ってから 1 年後に削除します。
 
 ## 3. 端末内に保存される情報
 
@@ -57,7 +57,7 @@ AI の回答や生成した画像を報告すると、報告の理由、コメ�
 
 ## 4. 第三者への提供
 
-2 章に書いたサービスへの送信を除き、開発者が情報を第三者に提供・販売することはありません。
+2 章に書いたサービスへの送信と、報告の保存に使う Google のサービスを除き、開発者が情報を第三者に提供・販売することはありません。
 
 ## 5. 子どもの利用
 
@@ -119,7 +119,7 @@ The app connects to Hugging Face to search for and download models. Your search 
 
 When you report an AI answer or generated image, the reason, your comment, the reported content (the answer text), the model name and the app version are sent to the developer — only when you choose to send the report.
 
-Reports are used only to improve content filtering and are deleted one year after they are received.
+Reports are stored in a Google Sheets spreadsheet managed by the developer (received through Google Apps Script), used only to improve content filtering, and deleted one year after they are received.
 
 ## 3. Information stored on the device
 
@@ -127,7 +127,7 @@ Chat history, document search indexes, generated images, downloaded models and s
 
 ## 4. Sharing with third parties
 
-Apart from the services listed in section 2, the developer does not share or sell your information.
+Apart from the services listed in section 2 and the Google services used to store reports, the developer does not share or sell your information.
 
 ## 5. Children
 
