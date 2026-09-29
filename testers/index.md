@@ -30,7 +30,7 @@ Hotaru は、スマホの中だけで動く AI アシスタントです（Androi
 
 ## 参加方法
 
-1. Google グループ [Hotaru テスター](https://groups.google.com/g/hotaru-testers) に参加します（Google Play で使っているアカウントで）
+1. Google グループ [Hotaru テスター](https://groups.google.com/g/hotaru-testers) に参加します（Google Play で使っているアカウントで）。「参加をリクエスト」と表示された場合は、承認されるまでお待ちください
 2. テストの準備ができたら、グループのお知らせで参加リンクをお送りします
 3. 参加リンクを開いて「テスターになる」を押し、Google Play からインストールします
 
@@ -72,7 +72,7 @@ Hotaru is an AI assistant that runs entirely on your phone (Android, coming soon
 
 ## How to join
 
-1. Join the Google Group [Hotaru testers](https://groups.google.com/g/hotaru-testers) with the account you use on Google Play.
+1. Join the Google Group [Hotaru testers](https://groups.google.com/g/hotaru-testers) with the account you use on Google Play. If you see "Ask to join", please wait until your request is approved.
 2. When the test is ready, we'll post the opt-in link to the group.
 3. Open the link, tap "Become a tester", and install from Google Play.
 
