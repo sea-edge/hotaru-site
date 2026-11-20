@@ -5,7 +5,7 @@ lang: ja
 
 # Hotaru プライバシーポリシー
 
-最終更新日：2026年9月29日
+最終更新日：2026年11月20日
 
 [English](#hotaru-privacy-policy)
 
@@ -13,51 +13,64 @@ Hotaru（以下「本アプリ」）は、sea-edge（以下「開発者」）が
 
 ## 1. 基本方針
 
-- 会話、写真、音声、ドキュメント、生成した画像は、端末の中で処理・保存され、開発者のサーバーには送られません。
+- 通常のチャット、文書への質問、画像生成は端末内で処理します。Web 検索や報告など、選んだ機能に応じて外部に送られる内容は下記のとおりです。
 - アカウント登録は不要です。
 - 広告は表示せず、広告のためのツール（SDK）も組み込んでいません。利用状況を分析するためのツールは、2.1 の ML Kit を除いて組み込んでいません。
 
-## 2. 端末の外に送られる情報
+## 2. 外部サービスや他のアプリに渡す情報
 
-以下の場合にだけ、情報が端末の外に送られます。
+### 2.1 Gemini Nano の対応状況を確認するとき・利用するとき
 
-### 2.1 Gemini Nano を使うとき（Google の ML Kit）
+Hotaru は初回案内やモデル画面などで Google の ML Kit を使い、Gemini Nano の利用可否を確認します。対応端末では Google のシステムサービス AICore を使って推論します。ML Kit は診断と利用状況の分析のため、次の情報を Google に送ります。
 
-対応端末で Gemini Nano を使うため、Google の ML Kit を組み込んでいます。ML Kit は、機能の診断と改善のために、次の情報を Google に送ります。
-
-- 端末の情報（メーカー、機種、OS のバージョン）
+- 端末の情報（メーカー、機種、OS のバージョン、利用可能な機械学習アクセラレータ）
 - 本アプリの情報（パッケージ名、バージョン）
-- インストールごとの識別子
-- 性能の指標（処理にかかった時間など）、機能の設定、イベントの種類、エラーコード、設定された言語
+- ユーザー・端末などの識別子、インストールごとの識別子
+- 入力と出力のサイズ、処理時間などの性能指標、機能の設定・バージョン、設定言語、イベントの種類、エラーコード
 
-**入力した文章・画像や、AI の回答は送られません。** 詳しくは [ML Kit のデータ開示](https://developers.google.com/ml-kit/android-data-disclosure) と [Google のプライバシーポリシー](https://policies.google.com/privacy) をご覧ください。
+入力した文章・画像や回答の内容は端末内で処理されます。診断情報の詳細は Google の資料をご覧ください。[ML Kit のデータ開示](https://developers.google.com/ml-kit/android-data-disclosure)・[Google のプライバシーポリシー](https://policies.google.com/privacy)
 
 ### 2.2 Web 検索をオンにしたとき
 
-メッセージごとに「Web 検索」をオンにした場合にだけ、次の処理を行います。
+送信時に「Web 検索」がオンなら、そのメッセージの本文を検索語として Brave Search または DuckDuckGo に送ります。既定はオフです。設定でオンの状態を次のメッセージにも引き継げます。自動設定では登録済みの API キーを Brave Search に送り、キーがない場合や検索が失敗した場合は DuckDuckGo を利用します。
 
-- そのメッセージの本文を検索語として、Brave Search API または DuckDuckGo に送ります。
-- 検索結果の上位のウェブページを読み込みます。このとき、各サイトには通常のウェブ閲覧と同じく、IP アドレスなどが伝わります。
+上位の検索結果のページに接続して関連箇所を読み込みます。検索サービスと接続したサイトには、IP アドレス、Hotaru のバージョン、端末の言語などの通信情報が伝わります。出典の URL や引用を、端末内の会話履歴に保存します。
 
 送られた情報は、各サービスのプライバシーポリシーに従って扱われます（[Brave Search](https://search.brave.com/help/privacy-policy)、[DuckDuckGo](https://duckduckgo.com/privacy)）。
 
 ### 2.3 AI モデルを検索・ダウンロードするとき
 
-AI モデルの検索とダウンロードのために、Hugging Face に接続します。検索した語句と、設定した場合は Hugging Face のアクセストークンが送られます。アクセストークンは端末内で暗号化して保存します。
+Hugging Face または Civitai で検索すると、検索語や指定したモデルの ID がそのサービスに伝わります。モデルを選んで取得すると、配布元や配信用のサーバーには、リクエストしたファイル、IP アドレスなどが伝わります。認証情報を登録している場合は、Hugging Face へは Hugging Face のトークン、Civitai へは Civitai の API キーを送ります。これらと Brave Search のキーは、Android Keystore の鍵を使って端末内に暗号化して保存します。
 
 ### 2.4 不適切な出力を報告するとき
 
-AI の回答や生成した画像を報告すると、報告の理由、コメント、対象の内容（回答の文章）、使ったモデル名、本アプリのバージョンが開発者に送られます。報告は、ユーザーが送信を選んだときにだけ送られます。
+報告を確定すると、報告 ID、対象の種類、理由、任意のコメント、モデル ID、アプリのバージョンと、次の対象内容を開発者へ送ります。
+
+- チャットの回答は、その回答の本文。
+- 生成画像は、画像の生成に使ったプロンプト、seed（生成時の乱数の値）、モデル名。
+- 合成音声は、読み上げ用の入力文、声の種類、モデル名。
+
+画像ファイルや音声ファイルは添付しません。報告対象のテキストやコメントに個人情報が含まれる場合は、その情報も送られます。端末には報告と送信状態が保存されます。オフラインなどで配信が保留になった報告は、接続の回復後に再送されることがあります。
+
+設定に報告一覧がある版では、端末の控えを個別または一括で削除できます。この版は作成から 30 日を過ぎた控えを、次の起動、一覧表示、配信処理などの際に消去します。受信確認が取れない報告は一覧から再試行できます。端末の控えを削除しても、開発者が受信した報告は別に保管されます。
 
 報告は、開発者が管理する Google スプレッドシートに（Google Apps Script を通して）保存し、不適切な出力を減らすためのフィルターの改善にだけ使います。受け取ってから 1 年後に削除します。
 
+### 2.5 マイク・読み上げ・通知
+
+音声入力を選んだときは、マイクの許可を求めます。音声は Android の端末内音声認識または対応する端末内モデルで処理します。Hotaru の音声合成モデルを導入した場合は、端末内で音声を生成します。システム読み上げを選ぶと、読み上げる本文を Android で選択中の音声エンジンに渡します。オフライン音声を確認する版では、導入済みのオフライン音声を確認できないと読み上げを停止します。以前の版でエンジンが音声の情報を提供しない場合、そのエンジンによる本文の取り扱いや通信は提供元と端末の設定に従います。
+
+通知の許可は、モデルのダウンロード、回答生成、画像生成の進行を Android に表示するために使います。ダウンロードの通知にはモデル名と進捗が表示されます。
+
 ## 3. 端末内に保存される情報
 
-会話の履歴、読み込んだドキュメントの検索用データ、生成した画像、ダウンロードした AI モデル、設定は、本アプリ専用の領域に保存されます。アプリ内で削除できるほか、本アプリをアンインストールするとすべて消えます。
+会話履歴、取り込んだ文書の本文と検索用データ、添付・録音、生成画像・音声、モデル、設定、報告の控えは本アプリ専用の領域に保存されます。会話、文書、モデルなどはそれぞれの画面から削除できます。Android の設定でアプリのストレージを消去するか、アンインストールすると、アプリ専用領域のデータが削除されます。開発者がすでに受け取った報告の削除は、6 章の窓口で受け付けます。
+
+会話履歴の復元に対応する版は下書きや編集・再生成前の回答も端末に保存します。保存した過去の版は履歴画面から削除できます。Markdown 出力を選ぶと、会話本文、システムプロンプト、思考過程、出典などが選択した保存先に書き出されます。保存先にクラウドサービスを選ぶと、そのサービスにもコピーが保存されます。
 
 ## 4. 第三者への提供
 
-2 章に書いたサービスへの送信と、報告の保存に使う Google のサービスを除き、開発者が情報を第三者に提供・販売することはありません。
+画像を共有すると、その画像を Android の共有画面で選択したアプリへ渡します。画像や音声を端末の共有ストレージに書き出した場合は、保存先にコピーが残ります。本アプリを削除しても、共有先のコピーや、取り込み元の写真・文書は残ります。削除するには保存先や共有先の機能をご利用ください。開発者が情報を第三者に提供するのはこのポリシーに記載した場合に限り、情報を販売することはありません。
 
 ## 5. 子どもの利用
 
@@ -77,57 +90,70 @@ kaihatsu.dev@gmail.com
 
 # Hotaru Privacy Policy
 
-Last updated: September 29, 2026
+Last updated: November 20, 2026
 
 Hotaru ("the app") is an app by sea-edge ("the developer") that runs AI on your device. This page explains what information leaves your device.
 
 ## 1. Our approach
 
-- Your conversations, photos, voice, documents and generated images are processed and stored on your device. They are never sent to the developer's servers.
+- Ordinary chat, document questions and image generation run on your device. The information sent when you use features such as web search or reporting is described below.
 - No account is required.
 - The app shows no ads and contains no advertising SDKs. Apart from ML Kit (section 2.1), it contains no analytics SDKs.
 
-## 2. Information sent off the device
+## 2. Information sent to other services or apps
 
-Information leaves the device only in the following cases.
+### 2.1 Checking or using Gemini Nano
 
-### 2.1 When you use Gemini Nano (Google ML Kit)
+Hotaru uses Google ML Kit to check whether Gemini Nano is available, including during onboarding and on the models screen. On supported devices, Google's AICore system service runs inference. ML Kit sends the following information to Google for diagnostics and usage analytics.
 
-The app uses Google ML Kit to run Gemini Nano on supported devices. For diagnostics and improvement, ML Kit sends Google:
-
-- Device information (manufacturer, model, OS version)
+- Device information (manufacturer, model, OS version and available machine learning accelerators)
 - App information (package name, version)
-- A per-installation identifier
-- Performance metrics (such as latency), feature configuration, event types, error codes and configured languages
+- User, device or other identifiers, as well as per-installation identifiers
+- Input and output sizes, performance metrics such as latency, feature configuration and version, configured languages, event types and error codes
 
-**Your prompts, images and the AI's answers are not sent.** See [ML Kit data disclosure](https://developers.google.com/ml-kit/android-data-disclosure) and the [Google Privacy Policy](https://policies.google.com/privacy).
+The content of your prompts, images and answers is processed on your device. Google describes the diagnostic information in its documentation. [ML Kit data disclosure](https://developers.google.com/ml-kit/android-data-disclosure) and [Google Privacy Policy](https://policies.google.com/privacy)
 
 ### 2.2 When you turn on web search
 
-Only for messages where you turn on "Web search", the app:
+If web search is on when you send a message, Hotaru sends the message text as a query to Brave Search or DuckDuckGo. Web search is off by default. You can choose to keep it on for subsequent messages. In automatic mode, Hotaru sends your configured API key to Brave Search. It uses DuckDuckGo when no key is configured or the Brave search fails.
 
-- Sends the text of that message as a search query to the Brave Search API or DuckDuckGo.
-- Loads the top result pages. As with normal browsing, those sites receive your IP address and similar request information.
+Hotaru opens top result pages to read relevant passages. Search providers and the sites contacted receive request information including your IP address, Hotaru version and device language. Source URLs and excerpts are saved in your local chat history.
 
 That information is handled under each service's privacy policy ([Brave Search](https://search.brave.com/help/privacy-policy), [DuckDuckGo](https://duckduckgo.com/privacy)).
 
 ### 2.3 When you search for or download AI models
 
-The app connects to Hugging Face to search for and download models. Your search terms and, if you set one, your Hugging Face access token are sent. The token is stored encrypted on the device.
+When you search Hugging Face or Civitai, that service receives your search terms or the model ID you entered. When you choose a model to download, the provider and its delivery servers receive the file request and information such as your IP address. If you configure credentials, Hotaru sends your Hugging Face token to Hugging Face and your Civitai API key to Civitai. Hotaru stores these credentials and any Brave Search key encrypted on your device using a key in Android Keystore.
 
 ### 2.4 When you report an output
 
-When you report an AI answer or generated image, the reason, your comment, the reported content (the answer text), the model name and the app version are sent to the developer — only when you choose to send the report.
+When you confirm a report, Hotaru sends the developer a report ID, output type, reason, optional comment, model ID, app version and the following information about the selected output.
+
+- For a chat answer, the text of that answer.
+- For a generated image, its prompt, seed (the random value used in generation) and model name.
+- For synthesized speech, the input text, voice and model name.
+
+Image and audio files are not attached. Any personal information in the reported text or your comment is included. A copy of the report and its delivery status are stored on your device. Pending reports may be retried when a connection becomes available.
+
+In versions with a reports list in Settings, you can delete individual local copies or clear the list. These versions remove copies more than 30 days old during activities such as startup, opening the list or processing delivery. You can retry an unconfirmed report from the list. Removing a local copy leaves the report already received by the developer in place.
 
 Reports are stored in a Google Sheets spreadsheet managed by the developer (received through Google Apps Script), used only to improve content filtering, and deleted one year after they are received.
 
+### 2.5 Microphone, read-aloud and notifications
+
+Hotaru requests microphone permission when you choose voice input. Android's on-device speech recognizer or a compatible local model processes the audio. Hotaru's downloadable speech synthesis model also runs on your device. When you choose system read-aloud, Hotaru passes the text to the speech engine selected in Android. Versions that verify offline voices stop when they cannot confirm an installed offline voice. In earlier versions, if the engine does not identify its available voices, its handling of the text and use of the network depend on the provider and your device settings.
+
+Hotaru uses notification permission to show model downloads, answer generation and image generation in progress. Download notifications show the model name and progress.
+
 ## 3. Information stored on the device
 
-Chat history, document search indexes, generated images, downloaded models and settings are stored in the app's private storage. You can delete them in the app, and uninstalling the app removes everything.
+The app's private storage holds chat history, imported document text and indexes, attachments, recordings, generated images and audio, models, settings and local report copies. You can delete conversations, documents and models from their respective screens. Clearing the app's storage in Android settings or uninstalling removes the data in its private storage. To delete a report already received by the developer, use the contact in section 6.
+
+Versions with conversation history restoration also keep drafts and earlier answers on your device. You can delete saved versions in the history screen. When you export a conversation as Markdown, the file can contain messages, the system prompt, reasoning and sources. Selecting a cloud destination saves a copy with that provider.
 
 ## 4. Sharing with third parties
 
-Apart from the services listed in section 2 and the Google services used to store reports, the developer does not share or sell your information.
+When you share an image, Hotaru passes it to the app you choose in the Android share sheet. Saving an image or audio file to shared storage creates a separate copy. Shared copies and original photos or documents you imported remain after you uninstall Hotaru. Use the destination app or storage location to delete those copies. The developer shares information only as described in this policy and does not sell it.
 
 ## 5. Children
 
