@@ -52,17 +52,21 @@ Hugging Face または Civitai で検索すると、検索語や指定したモ�
 
 画像ファイルや音声ファイルは添付しません。報告対象のテキストやコメントに個人情報が含まれる場合は、その情報も送られます。端末には報告と送信状態が保存されます。オフラインなどで配信が保留になった報告は、接続の回復後に再送されることがあります。
 
+設定に報告一覧がある版では、端末の控えを個別または一括で削除できます。この版は作成から 30 日を過ぎた控えを、次の起動、一覧表示、配信処理などの際に消去します。受信確認が取れない報告は一覧から再試行できます。端末の控えを削除しても、開発者が受信した報告は別に保管されます。
+
 報告は、開発者が管理する Google スプレッドシートに（Google Apps Script を通して）保存し、不適切な出力を減らすためのフィルターの改善にだけ使います。受け取ってから 1 年後に削除します。
 
 ### 2.5 マイク・読み上げ・通知
 
-音声入力を選んだときは、マイクの許可を求めます。音声は Android の端末内音声認識または対応する端末内モデルで処理します。Hotaru の音声合成モデルを導入した場合は、端末内で音声を生成します。システム読み上げを選ぶと、読み上げる本文を Android で選択中の音声エンジンに渡します。エンジンが音声の情報を提供しない場合もあり、そのエンジンによる本文の取り扱いや通信は、提供元と端末の設定に従います。
+音声入力を選んだときは、マイクの許可を求めます。音声は Android の端末内音声認識または対応する端末内モデルで処理します。Hotaru の音声合成モデルを導入した場合は、端末内で音声を生成します。システム読み上げを選ぶと、読み上げる本文を Android で選択中の音声エンジンに渡します。オフライン音声を確認する版では、導入済みのオフライン音声を確認できないと読み上げを停止します。以前の版でエンジンが音声の情報を提供しない場合、そのエンジンによる本文の取り扱いや通信は提供元と端末の設定に従います。
 
 通知の許可は、モデルのダウンロード、回答生成、画像生成の進行を Android に表示するために使います。ダウンロードの通知にはモデル名と進捗が表示されます。
 
 ## 3. 端末内に保存される情報
 
 会話履歴、取り込んだ文書の本文と検索用データ、添付・録音、生成画像・音声、モデル、設定、報告の控えは本アプリ専用の領域に保存されます。会話、文書、モデルなどはそれぞれの画面から削除できます。Android の設定でアプリのストレージを消去するか、アンインストールすると、アプリ専用領域のデータが削除されます。開発者がすでに受け取った報告の削除は、6 章の窓口で受け付けます。
+
+会話履歴の復元に対応する版は下書きや編集・再生成前の回答も端末に保存します。保存した過去の版は履歴画面から削除できます。Markdown 出力を選ぶと、会話本文、システムプロンプト、思考過程、出典などが選択した保存先に書き出されます。保存先にクラウドサービスを選ぶと、そのサービスにもコピーが保存されます。
 
 ## 4. 第三者への提供
 
@@ -131,17 +135,21 @@ When you confirm a report, Hotaru sends the developer a report ID, output type, 
 
 Image and audio files are not attached. Any personal information in the reported text or your comment is included. A copy of the report and its delivery status are stored on your device. Pending reports may be retried when a connection becomes available.
 
+In versions with a reports list in Settings, you can delete individual local copies or clear the list. These versions remove copies more than 30 days old during activities such as startup, opening the list or processing delivery. You can retry an unconfirmed report from the list. Removing a local copy leaves the report already received by the developer in place.
+
 Reports are stored in a Google Sheets spreadsheet managed by the developer (received through Google Apps Script), used only to improve content filtering, and deleted one year after they are received.
 
 ### 2.5 Microphone, read-aloud and notifications
 
-Hotaru requests microphone permission when you choose voice input. Android's on-device speech recognizer or a compatible local model processes the audio. Hotaru's downloadable speech synthesis model also runs on your device. When you choose system read-aloud, Hotaru passes the text to the speech engine selected in Android. Some engines do not identify their available voices. How the engine handles text and uses the network depends on its provider and your device settings.
+Hotaru requests microphone permission when you choose voice input. Android's on-device speech recognizer or a compatible local model processes the audio. Hotaru's downloadable speech synthesis model also runs on your device. When you choose system read-aloud, Hotaru passes the text to the speech engine selected in Android. Versions that verify offline voices stop when they cannot confirm an installed offline voice. In earlier versions, if the engine does not identify its available voices, its handling of the text and use of the network depend on the provider and your device settings.
 
 Hotaru uses notification permission to show model downloads, answer generation and image generation in progress. Download notifications show the model name and progress.
 
 ## 3. Information stored on the device
 
 The app's private storage holds chat history, imported document text and indexes, attachments, recordings, generated images and audio, models, settings and local report copies. You can delete conversations, documents and models from their respective screens. Clearing the app's storage in Android settings or uninstalling removes the data in its private storage. To delete a report already received by the developer, use the contact in section 6.
+
+Versions with conversation history restoration also keep drafts and earlier answers on your device. You can delete saved versions in the history screen. When you export a conversation as Markdown, the file can contain messages, the system prompt, reasoning and sources. Selecting a cloud destination saves a copy with that provider.
 
 ## 4. Sharing with third parties
 
